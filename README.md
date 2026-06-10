@@ -5,7 +5,7 @@ Node js is a single thraded non blocking architecture
 Javascript code run on server
 
 ### 2. Create a "hello Word" in Node.js ###  
-```
+```javascript
 const http = require('http');  
 http.createserver(function(req,res){  
   res.writeHead(200,{'content-type': 'text/html'})  
