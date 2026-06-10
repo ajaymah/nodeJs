@@ -13,6 +13,31 @@ http.createServer(function(req,res){
 }).listen(8080)  
 ```
 ### 2. What is cluster in node js and why we use ###
+**Clusters** of Node.js processes can be used to run multiple instances of Node.js that can distribute workloads among their application threads
+Note > we are distribute workloads in multiple workers
+```javascript
+const cluster = require('node:cluster');
+const http = require('node:http');
+const numCPUs = require('node:os').availableParallelism();
+const express = require('express');
+
+if (cluster.isPrimary) {
+  console.log(`Primary ${process.pid} is running`);
+
+  // Fork workers.
+  for (let i = 0; i < numCPUs; i++) {
+    cluster.fork();
+  }
+} else {
+  const app = express();
+  const PORT = 3000;
+
+ app.get('/', (req, res) => {
+  res.send(`Worker ${process.pid} started``);
+});
+}
+```
+
 
 ### 3. what is worker_thread in Node.js ###  
 
