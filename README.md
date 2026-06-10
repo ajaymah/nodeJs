@@ -9,7 +9,7 @@ Javascript code run on server
 const http = require('http');  
 http.createServer(function(req,res){  
   res.writeHead(200, { 'Content-Type': 'text/html' })  
-  res.end('Hello world'); // Changed .send() to .end()
+  res.send('Hello world'); // Changed .send() to .end()
 }).listen(8080)  
 ```
 ### 2. What is cluster in node js and why we use ###
