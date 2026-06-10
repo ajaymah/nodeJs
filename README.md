@@ -5,12 +5,13 @@ Node js is a single thraded non blocking architecture
 Javascript code run on server
 
 ### 2. Create a "hello Word" in Node.js ###  
-const http = require('http');
-http.createserver(function(req,res){
-  res.writeHead(200,{'content-type': 'text/html'})
-  res.send('Hello world')
-}).listen(8080)
-
+```
+const http = require('http');  
+http.createserver(function(req,res){  
+  res.writeHead(200,{'content-type': 'text/html'})  
+  res.send('Hello world')  
+}).listen(8080)  
+```
 ### 2. What is cluster in node js and why we use ###
 
 ### 3. what is worker_thread in Node.js ###  
