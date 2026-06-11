@@ -73,8 +73,47 @@ End
 Inside nextTick  
 ```
 ### 5. What is setImediate() ###  
+**setImmediate()** is a Node.js function that **schedules a callback** to run after the current event loop cycle, during the "check" phase.
+> It is commonly used to execute a function as soon as possible, but after I/O events and the current code have finished.
+```javascript
+console.log("Start");
+
+setImmediate(() => {
+  console.log("Inside setImmediate");
+});
+
+console.log("End");
+Start
+End
+Inside setImmediate
+```
+> **setImmediate() callbacks are executed during the Check phase**.
+**setImmediate() vs setTimeout(fn, 0)**
+```javascript
+const fs = require("fs");
+
+fs.readFile(__filename, () => {
+  setImmediate(() => {
+    console.log("setImmediate");
+  });
+
+  setTimeout(() => {
+    console.log("setTimeout");
+  }, 0);
+});
+setImmediate
+setTimeout
+```
+> process.nextTick() always has higher priority.
 
 ### 6. Diffrence between fs.readfile vs fs.createReadStream() ###   
+**fs.readFile()** reads the entire file into memory before processing, making it suitable for small files.  
+**fs.createReadStream()** reads the file in chunks using streams, which is more memory-efficient and ideal for large files such as videos, logs, and big datasets. 
+---- Why is fs.createReadStream() better for large files?
+1- It reads data in chunks.
+2- Uses less memory.
+3- Prevents blocking the event loop.
+4- Improves application performance and scalability.
 
 ### 7. When res.end() twice in am HTTP server ###  
 
