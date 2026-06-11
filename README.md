@@ -40,6 +40,21 @@ if (cluster.isPrimary) {
 
 
 ### 3. what is worker_thread in Node.js ###  
+**worker_threads** is a Node.js module that allows you to run JavaScript code in parallel using multiple threads.
+```javascript
+const { Worker } = require("worker_threads");
+const worker = new Worker("./worker.js");
+
+worker.postMessage(10);
+
+worker.on("message", (result) => {
+    console.log("Result:", result);
+});
+
+worker.on("error", (err) => {
+    console.log(err);
+});
+```
 
 ### 4. what is process.nextTick() in Node.js ####  
 
