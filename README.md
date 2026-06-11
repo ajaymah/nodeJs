@@ -122,7 +122,7 @@ http.createServer((req, res) => {
     res.end("World");
 }).listen(3000);
 
-**correct way->**
+// correct way //
 http.createServer((req, res) => {
     if (req.url === "/") {
         return res.end("Home");
