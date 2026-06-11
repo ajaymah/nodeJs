@@ -68,6 +68,9 @@ process.nextTick(() => {
 });
 
 console.log("End");
+Start  
+End  
+Inside nextTick  
 ```
 ### 5. What is setImediate() ###  
 
