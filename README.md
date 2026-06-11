@@ -114,8 +114,28 @@ setTimeout
 2- Uses less memory.
 3- Prevents blocking the event loop.
 4- Improves application performance and scalability.
+```javascript
+const http = require("http");
+
+http.createServer((req, res) => {
+    res.end("Hello");
+    res.end("World");
+}).listen(3000);
+
+**correct way->**
+http.createServer((req, res) => {
+    if (req.url === "/") {
+        return res.end("Home");
+    }
+
+    res.end("Not Found");
+});
+```
 
 ### 7. When res.end() twice in am HTTP server ###  
+In Node.js, res.end() is **used to finish the HTTP response.** Once it is called, the response is sent to the client and the connection is considered complete.  
+
+If you call res.end() a second time, Node.js **will throw an error** because the response has already been finished.
 
 ### 8. what is ripple invirement in Node.js ###  
 
