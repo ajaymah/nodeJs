@@ -57,7 +57,18 @@ worker.on("error", (err) => {
 ```
 
 ### 4. what is process.nextTick() in Node.js ####  
+process.nextTick() is a Node.js method that executes a callback immediately after the current operation completes, 
+before the event loop continues to the next phase.  
+> It is used to defer the execution of a function without waiting for timers or I/O operations.  
+```javascript
+console.log("Start");
 
+process.nextTick(() => {
+  console.log("Inside nextTick");
+});
+
+console.log("End");
+```
 ### 5. What is setImediate() ###  
 
 ### 6. Diffrence between fs.readfile vs fs.createReadStream() ###   
