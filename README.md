@@ -138,8 +138,42 @@ In Node.js, res.end() is **used to finish the HTTP response.** Once it is called
 If you call res.end() a second time, Node.js **will throw an error** because the response has already been finished.
 
 ### 8. what is ripple invirement in Node.js ###  
+REPL stands for **Read, Evaluate, Print**, and **Loop**. It is an interactive shell provided by Node.js that allows developers to execute JavaScript code line by line and immediately see the results. It is mainly used for testing, debugging, and learning.
 
 ### 8. why we use expresss.js ###  
+**Express.js** is a fast, lightweight, and flexible web framework for Node.js that helps developers build web applications and REST APIs easily.  
+Example: Without Express.js (this becomes difficult to manage.)  
+```javascript
+const http = require("http");
+
+const server = http.createServer((req, res) => {
+    if (req.url === "/") {
+        res.end("Home Page");
+    } else if (req.url === "/about") {
+        res.end("About Page");
+    }
+});
+
+server.listen(3000);
+```
+Example: >With Express.js  (The code is shorter and easier to maintain.)   
+```javascript
+const express = require("express");
+
+const app = express();
+
+app.get("/", (req, res) => {
+    res.send("Home Page");
+});
+
+app.get("/about", (req, res) => {
+    res.send("About Page");
+});
+
+app.listen(3000, () => {
+    console.log("Server is running on port 3000");
+});
+```
 
 ### 9. Promisse in node js ###  
 
