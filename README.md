@@ -191,8 +191,67 @@ A Promise is an object that represents the eventual completion or failure of an 
 
 
 ### 10. Event-driven architecture in Node.js ###
+Event-driven architecture in Node.js is a design pattern where events trigger callbacks, allowing asynchronous and non-blocking execution of code  
+```javascript
+| Method                 | Description                |
+| ---------------------- | -------------------------- |
+| `on()`                 | Register an event listener |
+| `emit()`               | Trigger an event           |
+| `once()`               | Execute listener only once |
+| `off()`                | Remove an event listener   |
+| `removeAllListeners()` | Remove all listeners       |
 
-### 11. What is buffer in node js ###
+```
+**Why do we use Event-Driven Architecture?**  
+
+✅ Non-blocking I/O  
+
+✅ High performance  
+
+✅ Handles thousands of concurrent requests  
+
+✅ Efficient resource utilization  
+
+✅ Perfect for real-time applications  
+
+### 11. What is buffer in node js ###  
+A Buffer is a global object in Node.js used to store and manipulate **binary data**.  
+Since JavaScript does not handle binary data directly, Node.js provides the Buffer class.
+**Why do we use Buffer?**  
+Suppose you read an image file.
+The image is not stored as text; it is stored as binary data (0s and 1s). Node.js uses Buffers to handle this binary data efficiently.
+**Example:** Creating a Buffer  
+```javascript
+const buffer = Buffer.from("Hello");
+console.log(buffer); //output <Buffer 48 65 6c 6c 6f> //
+
+//Convert Buffer to String //
+const buffer = Buffer.from("Hello");
+console.log(buffer.toString()); // output Hello ///
+```
+**Example:** Buffer Example with File System  
+```javascript
+// sample.txt //  "Hello Node.js"
+const fs = require("fs");
+
+fs.readFile("sample.txt", (err, data) => {
+    if (err) throw err;
+
+    console.log(data);            // Buffer
+    console.log(data.toString()); // Text
+});
+// output <Buffer 48 65 6c 6c 6f 20 4e 6f 64 65 2e 6a 73> //
+// output Hello Node.js //
+
+| Method              | Description                |
+| ------------------- | -------------------------- |
+| `Buffer.from()`     | Create a buffer from data  |
+| `Buffer.alloc()`    | Create a fixed-size buffer |
+| `buffer.toString()` | Convert buffer to string   |
+| `buffer.write()`    | Write data into a buffer   |
+| `buffer.length`     | Get buffer size            |
+
+```
 
 ### 12. what are streams in node js ###
 
