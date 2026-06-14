@@ -178,14 +178,14 @@ app.listen(3000, () => {
 ### 9. Promisse in node js ###  
 A Promise is an object that represents the eventual completion or failure of an asynchronous operation. It has three states: **Pending, Fulfilled, and Rejected.** Promises use .then(), .catch(), and .finally() to handle results and are widely used with async/await  
 >A Promise in Node.js is an object used to handle asynchronous operations, representing a value that may be available now, later, or never.
-| Method                 | Description                             |
-| ---------------------- | --------------------------------------- |
-| `Promise.resolve()`    | Creates a resolved Promise              |
-| `Promise.reject()`     | Creates a rejected Promise              |
-| `Promise.all()`        | Waits for all Promises                  |
-| `Promise.race()`       | Returns the first completed Promise     |
-| `Promise.allSettled()` | Returns all results, success or failure |
-| `Promise.any()`        | Returns the first successful Promise    |
+| Method                 | Description                             |  
+| ---------------------- | --------------------------------------- |  
+| `Promise.resolve()`    | Creates a resolved Promise              |  
+| `Promise.reject()`     | Creates a rejected Promise              |  
+| `Promise.all()`        | Waits for all Promises                  |  
+| `Promise.race()`       | Returns the first completed Promise     |  
+| `Promise.allSettled()` | Returns all results, success or failure |  
+| `Promise.any()`        | Returns the first successful Promise    |  
 
 
 ### 10. Event-driven architecture in Node.js ###
