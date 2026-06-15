@@ -253,7 +253,60 @@ fs.readFile("sample.txt", (err, data) => {
 
 ```
 
-### 12. what are streams in node js ###
+### 12. what are streams in node js ###  
+A Stream in Node.js is a way to **read or write data piece by piece (chunks)** instead of loading the entire data into memory.  
+Streams are used to handle **large files**  
+
+**Why do we use Streams?**  
+Suppose you have a 2 GB video file.
+**Without Streams** (fs.readFile())  
+```javascripr
+2 GB File ---> Load Entire File into Memory ---> Process
+// High memory usage. //
+```
+**With Streams:**  
+```javascript
+2 GB File
+  Chunk 1 ---> Process
+  Chunk 2 ---> Process
+  Chunk 3 ---> Process
+```
+**Readable Stream** - reading a file  
+```javascript
+const fs = require("fs");
+
+const stream = fs.createReadStream("sample.txt", "utf8");
+
+stream.on("data", (chunk) => {
+    console.log(chunk);
+});
+```
+**Writable Stream**  
+```javascript
+const fs = require("fs");
+
+const stream = fs.createWriteStream("output.txt");
+
+stream.write("Hello ");
+stream.write("Node.js");
+stream.end();
+```
+**Duplex Stream** A Duplex stream can both read and write.  
+```javascript
+Read <------> Write
+```
+**Transform Stream** 
+A Transform stream can change the data while passing it through.  
+Example: Compressing a file using zlib.  
+```javascript
+const fs = require("fs");
+const zlib = require("zlib");
+
+fs.createReadStream("input.txt")
+  .pipe(zlib.createGzip())
+  .pipe(fs.createWriteStream("input.txt.gz"));
+```
+
 
 ### 13. what is the use for timer module in node js ##
 
