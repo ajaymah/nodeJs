@@ -306,13 +306,163 @@ fs.createReadStream("input.txt")
   .pipe(zlib.createGzip())
   .pipe(fs.createWriteStream("input.txt.gz"));
 ```
+**Example:**  
+```javascript
+const fs = require("fs");
+
+const stream = fs.createReadStream("sample.txt");
+
+stream.on("data", (chunk) => {
+    console.log(chunk.toString());
+});
+
+stream.on("end", () => {
+    console.log("Reading completed");
+});
+```
 
 
-### 13. what is the use for timer module in node js ##
+### 13. What is the use for timer module in node js ###  
+The **Timer module** in Node.js - helps perform tasks asynchronously without blocking the event loop.  
+**Common Timer Functions**  
+```javascript
+setTimeout()	   Executes a function once after a specified delay
+setInterval()	   Executes a function repeatedly after a specified interval
+setImmediate()	 Executes a function after the current event loop cycle
+clearTimeout()	 Cancels a setTimeout()
+clearInterval()	 Cancels a setInterval()
+clearImmediate() Cancels a setImmediate()
+
+// **setInterval**
+let count = 0;
+const timer = setInterval(() => {
+    count++;
+    console.log(count);
+
+    if (count === 5) {
+        clearInterval(timer);
+    }
+}, 1000);
+
+// setImmediate -  Executes a callback during the check phase of the event loop. //
+console.log("Start");
+
+setImmediate(() => {
+    console.log("Immediate");
+});
+
+console.log("End");
+```
 
 ### 14 What is body parser in node js ###
+Body Parser is Express middleware that **parses incoming request bodies** and makes the data available in **req.body**. It is commonly used to handle JSON and form data sent by clients.
+>Body Parser is middleware used in Express.js to read and parse the data sent in the HTTP request body.  
+>When a client sends data using a POST, PUT, or PATCH request, the data is available in the request body. Body Parser converts that data into a JavaScript object so that you can access it using req.body.
+
+Why do we use Body Parser?   
+```javascript
+/// client send the data //
+{
+  "name": "Ajay",
+  "age": 25
+}
+
+// Without body parser, req.body will be: //
+output:  undefined
+
+With body parser: req.body
+output
+{
+  name: "Ajay",
+  age: 25
+}
+```
+**Example:**  
+```javascript
+const express = require("express");
+const bodyParser = require("body-parser");
+
+const app = express();
+
+app.use(bodyParser.json());
+
+app.post("/user", (req, res) => {
+    console.log(req.body);
+    res.send("Data received");
+});
+
+app.listen(3000);
+
+URL-Encoded Parser  
+app.use(express.urlencoded({ extended: true }));
+```
+Step 2: Use the middleware
+```javascript
+const express = require("express");
+const cors = require("cors");
+
+const app = express();
+
+app.use(cors());
+
+app.get("/", (req, res) => {
+    res.send("CORS Enabled");
+});
+
+app.listen(5000);
+```
+Step 3: Allow Only Specific Origin
+```javascript
+const cors = require("cors");
+app.use(cors({
+    origin: "http://localhost:3000"
+}));
+```
+
 
 ### 15. What is CORS in node js, why we need? ###
+**CORS** stands for **Cross-Origin Resource Sharing**.  
+It is a **browser security feature** that controls whether a web page can request resources from a different origin (domain, protocol, or port).  
+it is  allows or restricts web applications from making requests to a different origin.  
+**What is an Origin?**  
+- Protocol (http or https)  
+- Domain (example.com)  
+- Port (3000, 5000, etc.)  
+Example
+```javascript
+Frontend: http://localhost:3000
+
+Backend API: http://localhost:5000  
+```
+The abaove ports are different, these are different origins.  
+
+> CORS allows the server to specify which origins are allowed to access its resources.
+```javascript
+ERROR:
+Access to fetch at 'http://localhost:5000'
+from origin 'http://localhost:3000'
+has been blocked by CORS policy.
+```
+**Common CORS Headers**  
+```javascript
+Header	Purpose
+Access-Control-Allow-Origin	       Allowed origin
+Access-Control-Allow-Methods	     Allowed HTTP methods
+Access-Control-Allow-Headers	     Allowed request headers
+Access-Control-Allow-Credentials	 Allows cookies/authentication
+example:
+Access-Control-Allow-Origin: http://localhost:3000
+```
+How do you enable CORS in Express?  
+```javascript
+const cors = require("cors");
+app.use(cors());
+
+//Or for a specific origin //
+app.use(cors({
+    origin: "http://localhost:3000"
+}));
+```
 
 ### 16. how can we implement architecture in node js ###
 
