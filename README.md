@@ -644,7 +644,8 @@ const upload = multer({
 });
 ```
 
-### 18. how can handle email in node js ###
+### 18. how can handle email in node js ###  
+In Node.js, emails are commonly sent using the Nodemailer package.  
 
 ### 19. Example connect database in node js ###
 
