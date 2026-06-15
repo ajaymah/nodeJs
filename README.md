@@ -464,9 +464,185 @@ app.use(cors({
 }));
 ```
 
-### 16. how can we implement architecture in node js ###
+### 16. how can we implement architecture in node js ###  
+The most common architecture for Node.js applications is **Layered Architecture (MVC)** or **Clean Architecture**.  
+Step-1: **MVC (Model-View-Controller) Architecture**  
+```javascript
+Client Request >  Routes >  Controller > Service (Optional) > Model > Database
+```
+Folder structureL  
+```javascript
+project/
+│
+├── controllers/
+│     └── userController.js
+│
+├── models/
+│     └── userModel.js
+│
+├── routes/
+│     └── userRoutes.js
+│
+├── services/
+│     └── userService.js
+│
+├── middleware/
+│
+├── config/
+│
+├── app.js
+└── server.js
+```
+**Route:**   
+```javascript
+const express = require("express");
+const router = express.Router();
+const userController = require("../controllers/userController");
 
-### 17. how can we file uploding in node js ###
+router.get("/users", userController.getUsers);
+
+module.exports = router;
+```
+**Controller:**   
+```javascript
+const userService = require("../services/userService");
+
+exports.getUsers = async (req, res) => {
+    const users = await userService.getAllUsers();
+    res.json(users);
+};
+```
+**Service**   
+```javascript
+const userModel = require("../models/userModel");
+
+exports.getAllUsers = () => {
+    return userModel.find();
+};
+```
+Model  
+```javascript
+const mongoose = require("mongoose");
+
+const userSchema = new mongoose.Schema({
+    name: String
+});
+
+module.exports = mongoose.model("User", userSchema);
+```
+**Configuration**   
+```javascript
+config/
+    database.js
+    env.js
+
+// Store: //
+Database URLs
+JWT secrets
+Environment variables
+```
+**Error Handling**  
+```javascript
+app.use((err, req, res, next) => {
+    res.status(500).json({
+        message: err.message
+    });
+});
+```
+Why do we use the Service Layer?  
+The Service Layer contains the business logic, keeping controllers lightweight and making the code reusable and easier to test.  
+
+### 17. how can we file uploding in node js ###  
+In Node.js, file uploading is commonly using:  
+Express.js  and  Multer middleware  
+**Multer** handles **multipart/form-data**, which is used for uploading files.
+
+Example : 
+```javascript
+//Create Express Server//
+const express = require("express");
+const multer = require("multer");
+
+const app = express();
+
+// Configure Storage//
+const storage = multer.diskStorage({
+    destination: (req, file, cb) => {
+        cb(null, "uploads/");
+    },
+    filename: (req, file, cb) => {
+        cb(null, Date.now() + "-" + file.originalname);
+    }
+});
+
+const upload = multer({ storage: storage });
+
+// Create Upload API //
+app.post("/upload", upload.single("file"), (req, res) => {
+    res.send("File uploaded successfully");
+});
+
+// Start the Server // 
+app.listen(3000, () => {
+    console.log("Server running on port 3000");
+});
+```
+**HTML Form Example** //  
+```javascript
+<form action="/upload" method="POST" enctype="multipart/form-data">
+    <input type="file" name="file">
+    <button type="submit">Upload</button>
+</form>
+```
+Upload Multiple Files  
+```javascript
+app.post("/upload", upload.array("files", 5), (req, res) => {
+    res.send("Multiple files uploaded");
+});
+// This allows uploading up to 5 files.
+```
+Access Uploaded File Details  
+```javascript
+app.post("/upload", upload.single("file"), (req, res) => {
+    console.log(req.file);
+
+    res.json(req.file);
+});
+
+
+{
+    "fieldname": "file",
+    "originalname": "photo.jpg",
+    "filename": "1750000000-photo.jpg",
+    "destination": "uploads/",
+    "size": 102400
+}
+```
+Restrict File Types  
+```javascript
+const upload = multer({
+    storage: storage,
+    fileFilter: (req, file, cb) => {
+        if (
+            file.mimetype === "image/jpeg" ||
+            file.mimetype === "image/png"
+        ) {
+            cb(null, true);
+        } else {
+            cb(new Error("Only JPG and PNG files are allowed"));
+        }
+    }
+});
+```
+Limit file size  
+```javascript
+const upload = multer({
+    storage: storage,
+    limits: {
+        fileSize: 2 * 1024 * 1024
+    }
+});
+```
 
 ### 18. how can handle email in node js ###
 
